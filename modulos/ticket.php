@@ -58,6 +58,7 @@ function imprime_ticket($productos, $id_venta, $cambio)
     $printer->text("Venta #" . $id_venta);
     $printer->setEmphasis(false);
     $printer->feed();
+    $printer->feed();
 
 
     $printer->setJustification(Printer::JUSTIFY_LEFT);
@@ -65,23 +66,23 @@ function imprime_ticket($productos, $id_venta, $cambio)
     foreach ($productos as $producto) {
         $importe = $producto->cantidad * $producto->precio_venta;
         $total += $importe;
-        $importe_formateado = number_format($importe, 2, ".", ",");
+        $importe_formateado = number_format($importe, 0, ".", ".");
         $printer->setJustification(Printer::JUSTIFY_LEFT);
         $printer->text($producto->cantidad . "x" . $producto->nombre . "\n");
         $printer->setJustification(Printer::JUSTIFY_RIGHT);
         $printer->text(' $' . $importe_formateado . "\n");
     }
-    $ayudante_total = number_format($total, 2, ".", ",");
-    $ayudante_cambio = number_format($cambio, 2, ".", ",");
-    $ayudante_pago = number_format($total + $cambio, 2, ".", ",");
+    $ayudante_total = number_format($total, 0, ".", ".");
+    $ayudante_cambio = number_format($cambio, 0, ".", ".");
+    $ayudante_pago = number_format($total + $cambio, 0, ".", ".");
 
-    $printer->selectPrintMode(Printer::MODE_EMPHASIZED | Printer::MODE_FONT_B);
-    $printer->text("--------\n");
-    $printer->text("SU PAGO $" . $ayudante_pago . "\n");
+    $printer->selectPrintMode(Printer::MODE_EMPHASIZED | Printer::MODE_FONT_A);
+    $printer->text("----------------\n");
     $printer->text("TOTAL $" . $ayudante_total . "\n");
+    $printer->text("SU PAGO $" . $ayudante_pago . "\n");
     $printer->text("CAMBIO $" . $ayudante_cambio);
     $printer->feed();
-
+    $printer->feed();
     /*Calculamos la hora para desearle buenos días, tardes o noches*/
     $hora = date("G");
     $str_deseo = "a";
