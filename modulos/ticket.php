@@ -53,6 +53,8 @@ function imprime_ticket($productos, $id_venta, $cambio)
         $printer->text($dato . "\n");
     }
 
+    $printer->text(date("Y-m-d H:i:s") . "\n");
+    $printer->feed();
     /*Hacemos que el texto sea en negritas e imprimimos el nùmero de venta*/
     $printer->setEmphasis(true);
     $printer->text("Venta #" . $id_venta);
@@ -104,6 +106,13 @@ function imprime_ticket($productos, $id_venta, $cambio)
     $printer->setJustification(Printer::JUSTIFY_CENTER);
     $printer->text(strtoupper($str_deseo));
     $printer->feed();
+    $printer->feed();
+    $printer->feed();
+    $printer->feed();
+    $printer->feed();
+    $printer->feed();
+    $printer->text("----------------------------\n");
+    $printer->text("Firma Cliente");
 
     /*Terminamos el trabajo de impresión y abrimos el cajón*/
     $printer->feed(2);
@@ -111,3 +120,4 @@ function imprime_ticket($productos, $id_venta, $cambio)
     $printer->pulse();
     $printer->close();
 }
+
